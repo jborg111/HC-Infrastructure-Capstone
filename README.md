@@ -1,57 +1,87 @@
-
 # HealthConnect Infrastructure Capstone
 
 ## Project Overview
 
-This project focuses on modernizing the cloud infrastructure of HealthConnect, a fictional healthcare and telemedicine organization.
+This project modernizes the cloud infrastructure of HealthConnect, a fictional healthcare and telemedicine organization.
 
-The proposed solution uses Google Cloud Platform (GCP) and Terraform to design and implement a secure, scalable, and maintainable cloud infrastructure environment.
+The solution uses Google Cloud Platform (GCP) and Terraform to provision a segmented cloud network, controlled administrative access, and a private test virtual machine.
 
-The project emphasizes infrastructure automation, network segmentation, controlled access, and security-focused testing.
+The project demonstrates infrastructure as code, cloud networking, access control, and basic infrastructure security validation.
 
 ## Project Status
 
-**Under Development**
+**Implementation and testing completed.**
 
-## Project Objectives
+Infrastructure was deployed, validated, and subsequently destroyed to avoid ongoing cloud resource costs.
 
-- **Secure Infrastructure:** Design a cloud environment with security controls appropriate for a healthcare organization.
-- **Network Segmentation:** Implement a three-tier network architecture to separate infrastructure components.
-- **Infrastructure as Code:** Use Terraform to automate and manage cloud infrastructure.
-- **Access Control:** Implement controlled administrative access using Google Cloud Identity-Aware Proxy (IAP).
-- **Security Testing:** Evaluate infrastructure configurations and network security through controlled testing.
-- **Documentation:** Maintain architecture diagrams, implementation notes, and testing evidence.
+## Architecture
+
+The infrastructure includes:
+
+- **Custom VPC:** A manually configured Google Cloud virtual private cloud.
+- **Network segmentation:** Three subnets for public, application, and data network tiers.
+- **Cloud Router and Cloud NAT:** Outbound connectivity for resources without public IP addresses.
+- **Firewall rules:** Controlled ingress for IAP SSH and application traffic.
+- **Private test VM:** A Debian 12 virtual machine deployed in the application subnet without an external IP address.
+- **Identity-Aware Proxy (IAP):** Controlled administrative SSH access to the private VM.
 
 ## Technology Stack
 
 - Google Cloud Platform (GCP)
 - Terraform
-- Git
-- GitHub
+- Git and GitHub
+- Debian 12
+- Google Cloud SDK
 - PowerShell / Git Bash
 
 ## Repository Structure
 
 ```text
 HC-Infrastructure-Capstone/
-├── terraform/          # Infrastructure as Code
-│   └── modules/        # Reusable Terraform modules
-├── ansible/            # Configuration management (if required)
+├── terraform/
+│   ├── compute.tf
+│   ├── network.tf
+│   ├── provider.tf
+│   ├── variables.tf
+│   └── .terraform.lock.hcl
+├── ansible/
 │   └── roles/
-├── scripts/            # Automation and utility scripts
+├── scripts/
 ├── documentation/
-│   ├── architecture/   # Architecture diagrams
-│   ├── implementation/ # Implementation documentation
-│   ├── screenshots/    # Project screenshots
-│   └── testing/        # Testing evidence and results
+│   ├── architecture/
+│   ├── implementation/
+│   └── testing/
 ├── .gitignore
 └── README.md
 ```
 
-## Project Documentation
+## Validation and Testing
 
-Project documentation, architecture diagrams, implementation notes, and testing results will be added as development progresses.
+The implementation was validated through the following activities:
+
+1. Terraform configuration formatting and validation.
+2. Terraform plan and apply operations.
+3. Verification of the deployed network resources and firewall rules.
+4. Successful SSH access to the private VM through IAP.
+5. Successful outbound connectivity testing using `curl -I https://www.google.com`.
+6. Terraform destroy operation and verification that the Terraform state contained no remaining managed resources.
+
+## Security Considerations
+
+The project demonstrates several foundational cloud security practices:
+
+- No external IPv4 address assigned to the test VM.
+- Administrative SSH access restricted to Google's IAP TCP forwarding address range.
+- Separate network subnets for different infrastructure tiers.
+- Firewall rules restricting selected ingress traffic.
+- Terraform-managed infrastructure for repeatable deployment.
+
+This is an academic demonstration, not a production-ready healthcare environment. It does not process real patient information or establish HIPAA compliance.
+
+## Cost Management
+
+Cloud resources were deployed temporarily for implementation and testing. They were destroyed after validation to minimize ongoing costs.
 
 ## Disclaimer
 
-This is an academic cloud engineering capstone project using a fictional healthcare organization. It is not a production healthcare environment and does not contain real patient information.
+HealthConnect is a fictional organization created for academic purposes. This project is an educational cloud infrastructure demonstration and is not intended for production healthcare workloads.
