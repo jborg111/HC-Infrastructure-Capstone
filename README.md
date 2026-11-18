@@ -9,7 +9,9 @@ The solution uses Google Cloud Platform (GCP), Terraform, and Ansible to provisi
 The project emphasizes infrastructure as code, identity-based access control, network security, configuration management, and cloud audit logging.
 
 
-## Project Status 																				           Implementation, deployment, validation, and final cloud resource cleanup completed. All 10 Terraform-managed GCP resources were successfully destroyed after testing to prevent ongoing cloud costs.
+## Project Status
+
+ Implementation, deployment, validation, and final cloud resource cleanup completed. All 10 Terraform-managed GCP resources were successfully destroyed after testing to prevent ongoing cloud costs.
 
 The project includes Terraform infrastructure-as-code, Ansible configuration management, IAM and OS Login controls, IAP-based SSH access, and Cloud Audit Logging validation.
 ## Architecture
