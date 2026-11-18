@@ -32,3 +32,6 @@ credentials*.json
 .DS_Store
 Thumbs.db
 Desktop.ini
+
+# Local Ansible inventory
+ansible/inventory.ini

@@ -1,0 +1,34 @@
+---
+# Sprint 2 baseline configuration
+
+- name: Sprint 2 baseline
+  hosts: webservers
+  become: true
+
+  tasks:
+    - name: Install basic tools
+      ansible.builtin.apt:
+        name:
+          - curl
+          - jq
+          - unzip
+        state: present
+        update_cache: true
+
+    - name: Create proof file
+      ansible.builtin.copy:
+        dest: /etc/hc_sprint2_proof.txt
+        content: "Sprint2 baseline applied by Ansible\n"
+        owner: root
+        group: root
+        mode: "0644"
+
+    - name: Show proof file
+      ansible.builtin.command:
+        cmd: cat /etc/hc_sprint2_proof.txt
+      register: proof
+      changed_when: false
+
+    - name: Display proof
+      ansible.builtin.debug:
+        var: proof.stdout

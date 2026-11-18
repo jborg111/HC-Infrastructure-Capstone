@@ -1,0 +1,38 @@
+---
+- name: Deploy HealthConnect Portal
+  hosts: webservers
+  become: true
+
+  tasks:
+    - name: Ensure Nginx is installed
+      ansible.builtin.apt:
+        name: nginx
+        state: present
+        update_cache: true
+
+    - name: Ensure Nginx is running and enabled
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: true
+
+    - name: Deploy HealthConnect homepage
+      ansible.builtin.copy:
+        content: |
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>HealthConnect Secure Portal</title>
+          </head>
+          <body>
+            <h1>HealthConnect Secure Portal</h1>
+            <p>Managed via Ansible OS Login.</p>
+            <p>Infrastructure deployment demonstration.</p>
+          </body>
+          </html>
+        dest: /var/www/html/index.html
+        owner: root
+        group: root
+        mode: "0644"
